@@ -21,10 +21,32 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
+    <change-notes><![CDATA[
+<h2>New Features</h2>
+<ul>
+    <li>Open In VS Code action in Open In context menu</li>
+</ul>
+
+<h2>Features</h2>
+<ul>
+    <li>Open in VS Code option in Select In popup menu.</li>
+</ul>
+
+<h2>Known Issues</h2>
+<ul>
+    <li>None so far.</li>
+</ul>
+]]></change-notes>
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <selectInTarget implementation="sandipchitale.selectinvscode.OpenInVSCode"
                         id="sandipchitale.selectinvscode.OpenInVSCode"/>
     </extensions>
+    <actions>
+        <action id="sandipchitale.selectinvscode.OpenInVSCodeAction"
+                class="sandipchitale.selectinvscode.OpenInVSCodeAction" text="Open In VS Code">
+            <add-to-group group-id="RevealGroup" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
