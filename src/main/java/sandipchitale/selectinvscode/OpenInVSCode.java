@@ -19,11 +19,18 @@ public class OpenInVSCode implements SelectInTarget {
         VirtualFile virtualFile = context.getVirtualFile();
         if (virtualFile.isInLocalFileSystem()) {
             try {
-                String codeExecutable = Platform.current().equals(Platform.WINDOWS) ? "code.cmd" : "code";
+                String codeExecutable;
+                String virtualFilePath;
+                if (Platform.current().equals(Platform.WINDOWS)) {
+                    codeExecutable = "code.cmd";
+                    virtualFilePath = virtualFile.getPath().replace("/", "\\");
+                } else {
+                    codeExecutable = "code";
+                    virtualFilePath = virtualFile.getPath();
+                }
                 Process process = new ProcessBuilder()
-                        .command(codeExecutable,
-                                virtualFile.getPath().replace("/", "\\")
-                        ).inheritIO().start();
+                        .command(codeExecutable, virtualFilePath)
+                        .inheritIO().start();
                 new Thread(() -> {
                     try {
                         process.waitFor();
