@@ -25,6 +25,7 @@
 <h2>New Features</h2>
 <ul>
     <li>Open In VS Code action in Open In context menu</li>
+    <li>Go to line and column within the file when applicable.</li>
 </ul>
 
 <h2>Features</h2>

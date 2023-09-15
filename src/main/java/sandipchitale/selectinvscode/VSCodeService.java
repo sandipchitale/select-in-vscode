@@ -1,7 +1,5 @@
 package sandipchitale.selectinvscode;
 
-import com.intellij.execution.Platform;
-import com.intellij.openapi.ui.messages.MessageDialog;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.commons.lang.SystemUtils;
 
@@ -9,6 +7,9 @@ import java.io.IOException;
 
 public class VSCodeService {
     static void openInVSCode(VirtualFile virtualFile) {
+        openInVSCode(virtualFile, -1, -1);
+    }
+    static void openInVSCode(VirtualFile virtualFile, int line, int column) {
         if (virtualFile != null && virtualFile.isInLocalFileSystem()) {
             try {
                 String codeExecutable = "code";
@@ -20,9 +21,15 @@ public class VSCodeService {
                     codeExecutable = "code.cmd";
                     virtualFilePath = virtualFile.getPath().replace("/", "\\");
                 }
+                if (line > -1) {
+                    virtualFilePath += (":" + (line+1) + ((column > -1 ? ":" + (column+1) : "")));
+                }
                 Process process = new ProcessBuilder()
-                        .command(codeExecutable, virtualFilePath)
-                        .inheritIO().start();
+                        .command(codeExecutable,
+                                "-g",
+                                virtualFilePath)
+                        .inheritIO()
+                        .start();
                 new Thread(() -> {
                     try {
                         process.waitFor();

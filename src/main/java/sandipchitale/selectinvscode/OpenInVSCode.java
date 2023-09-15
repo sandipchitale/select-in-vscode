@@ -2,6 +2,8 @@ package sandipchitale.selectinvscode;
 
 import com.intellij.ide.SelectInContext;
 import com.intellij.ide.SelectInTarget;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.impl.text.PsiAwareTextEditorImpl;
 
 public class OpenInVSCode implements SelectInTarget {
     @Override
@@ -11,6 +13,13 @@ public class OpenInVSCode implements SelectInTarget {
 
     @Override
     public void selectIn(SelectInContext context, boolean requestFocus) {
+        FileEditor fileEditor = context.getFileEditorProvider().openFileEditor();
+        if (fileEditor instanceof PsiAwareTextEditorImpl psiAwareTextEditor) {
+            VSCodeService.openInVSCode(context.getVirtualFile(),
+                    psiAwareTextEditor.getEditor().getCaretModel().getLogicalPosition().line,
+                    psiAwareTextEditor.getEditor().getCaretModel().getLogicalPosition().column);
+            return;
+        }
         VSCodeService.openInVSCode(context.getVirtualFile());
     }
 
