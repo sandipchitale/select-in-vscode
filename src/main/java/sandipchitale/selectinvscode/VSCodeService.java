@@ -9,6 +9,7 @@ public class VSCodeService {
     static void openInVSCode(VirtualFile virtualFile) {
         openInVSCode(virtualFile, -1, -1);
     }
+
     static void openInVSCode(VirtualFile virtualFile, int line, int column) {
         if (virtualFile != null && virtualFile.isInLocalFileSystem()) {
             try {
@@ -19,7 +20,7 @@ public class VSCodeService {
                     codeExecutable = "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code";
                 } else if (SystemUtils.IS_OS_WINDOWS) {
                     codeExecutable = "code.cmd";
-                    virtualFilePath = virtualFile.getPath().replace("/", "\\");
+                    virtualFilePath = virtualFilePath.replace("/", "\\");
                 }
                 if (line > -1) {
                     virtualFilePath += (":" + (line+1) + ((column > -1 ? ":" + (column+1) : "")));
