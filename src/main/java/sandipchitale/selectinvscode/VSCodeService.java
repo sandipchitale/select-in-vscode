@@ -1,7 +1,7 @@
 package sandipchitale.selectinvscode;
 
+import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.apache.commons.lang.SystemUtils;
 
 import java.io.IOException;
 
@@ -16,9 +16,9 @@ public class VSCodeService {
                 String codeExecutable = "code";
                 String virtualFilePath = virtualFile.getPath();
 
-                if (SystemUtils.IS_OS_MAC) {
+                if (SystemInfo.isMac) {
                     codeExecutable = "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code";
-                } else if (SystemUtils.IS_OS_WINDOWS) {
+                } else if (SystemInfo.isWindows) {
                     codeExecutable = "code.cmd";
                     virtualFilePath = virtualFilePath.replace("/", "\\");
                 }
