@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "sandipchitale"
-version = "1.0.10"
+version = "1.0.11"
 
 repositories {
     mavenCentral()
@@ -30,9 +30,15 @@ tasks {
         kotlinOptions.jvmTarget = "17"
     }
 
+    runIde {
+        if (project.hasProperty("runIde_ideDir")) {
+            ideDir = file("${project.extra["runIde_ideDir"]}")
+        }
+    }
+
     patchPluginXml {
         sinceBuild.set("222")
-        untilBuild.set("243.*")
+        untilBuild.set("251.*")
     }
 
     signPlugin {
